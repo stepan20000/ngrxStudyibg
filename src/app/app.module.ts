@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { SmallTimerComponent } from './components/small-timer/small-timer.component';
 
 import { timer } from './reducers/timer/timer-reducer';
+import { BigTimerComponent } from './components/big-timer/big-timer.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SmallTimerComponent
+    SmallTimerComponent,
+    BigTimerComponent
   ],
   imports: [
     BrowserModule,

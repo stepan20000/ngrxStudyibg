@@ -1,0 +1,25 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="timer">
+    <span>
+        {{time.minutes}}
+    </span>
+      <span>:</span>
+      <span>
+        {{time.seconds}}
+    </span>
+    </div>
+    <div class="controls">
+      <button class="button" (click)="onStart()">
+        <img class="button__img" src="../assets/play.png" alt="play">
+      </button>
+      <button class="button" (click)="onPause()">
+        <img class="button__img" src="../assets/pause.png" alt="pause">
+      </button>
+      <button class="button" (click)="onStop()">
+        <img class="button__img" src="../assets/stop.png" alt="stop">
+      </button>
+    </div>
+    <app-small-timer></app-small-timer>
+  </div>
+</div>

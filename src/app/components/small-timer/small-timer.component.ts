@@ -1,28 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 import { IAppState } from '../../appState.interface';
-import { ProcessTimeService } from '../../services/process-time/process-time.service';
+import { ITimerState } from '../../reducers/timer/timer.interface';
 
 @Component({
   selector: 'app-small-timer',
   templateUrl: './small-timer.component.html',
   styleUrls: ['./small-timer.component.scss']
 })
-export class SmallTimerComponent implements OnInit {
+export class SmallTimerComponent  {
 
-  constructor(
+  public time: ITimerState = {
+    seconds: '00',
+    minutes: '00'
+  };
 
-    private store: Store<IAppState>,
-    private processTimeService: ProcessTimeService
+  private timeFromStore: Observable<ITimerState>;
 
-  ) {
-    this.timer = store.select('timer');
-    this.timer.subscribe((time: number) => {
-      this.time = this.processTimeService.calcMinutesAndSeconds(time);
+  constructor(private store: Store<IAppState>) {
+    this.timeFromStore = store.select('timer');
+    this.timeFromStore.subscribe((data: ITimerState) => {
+      this.time = data;
     });
   }
-
-  ngOnInit() {
-  }
-
 }

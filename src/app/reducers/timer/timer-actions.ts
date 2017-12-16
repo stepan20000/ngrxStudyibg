@@ -1,15 +1,16 @@
-// counter.actions.ts
 import { Action } from '@ngrx/store';
+import { ITimerState } from './timer.interface';
 
-export const INCREMENT  = '[Timer] Increment';
-export const RESET      = '[Timer] Reset';
+export const SET = '[Timer] Set';
+export const RESET = '[Timer] Reset';
 
-export class Increment implements Action {
-  readonly type = INCREMENT;
+export class Set implements Action {
+  readonly type = SET;
+  constructor(public payload: ITimerState) {}
 }
 
 export class Reset implements Action {
   readonly type = RESET;
 }
 
-export type All = Increment | Reset;
+export type All = Set | Reset;
