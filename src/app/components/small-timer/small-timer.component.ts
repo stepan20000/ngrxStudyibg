@@ -11,10 +11,7 @@ import { ITimerState } from '../../reducers/timer/timer.interface';
 })
 export class SmallTimerComponent  {
 
-  public time: ITimerState = {
-    seconds: '00',
-    minutes: '00'
-  };
+  public time: ITimerState;
 
   private timeFromStore: Observable<ITimerState>;
 

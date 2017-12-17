@@ -14,14 +14,12 @@ import {ITimerState} from '../../reducers/timer/timer.interface';
 })
 export class BigTimerComponent {
 
-  public time: ITimerState = {
-    seconds: '00',
-    minutes: '00'
-  };
+  public time: ITimerState;
 
   private timeFromStore: Observable<ITimerState>;
   private interval: number;
   private timerData = 0;
+  private isTimerOn =  false;
 
   constructor(private store: Store<IAppState>) {
     this.timeFromStore = store.select('timer');
@@ -32,11 +30,13 @@ export class BigTimerComponent {
 
 
   public onStart() {
-    this.interval  = window.setInterval(() => {
-      this.timerData++;
-      this.store.dispatch(new Set(this.processTime()));
-    }, 10);
-
+    if (!this.isTimerOn) {
+      this.isTimerOn = true;
+      this.interval  = window.setInterval(() => {
+        this.timerData++;
+        this.store.dispatch(new Set(this.processTime()));
+      }, 10);
+    }
   }
 
   public onPause() {
@@ -45,6 +45,7 @@ export class BigTimerComponent {
 
   public onStop() {
     clearInterval(this.interval);
+    this.isTimerOn = false;
     this.store.dispatch(new Reset());
   }
 
