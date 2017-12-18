@@ -41,6 +41,7 @@ export class BigTimerComponent {
 
   public onPause() {
     clearInterval(this.interval);
+    this.isTimerOn = false;
   }
 
   public onStop() {
