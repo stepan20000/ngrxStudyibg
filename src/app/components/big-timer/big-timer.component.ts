@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { IAppState } from '../../appState.interface';
 import { Set, Reset } from '../../reducers/timer/timer-actions';
 import {ITimerState} from '../../reducers/timer/timer.interface';
+import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-big-timer',
@@ -14,51 +16,46 @@ import {ITimerState} from '../../reducers/timer/timer.interface';
 })
 export class BigTimerComponent {
 
-  public time: ITimerState;
-
-  private timeFromStore: Observable<ITimerState>;
-  private interval: number;
+  public timeFromStore: Observable<ITimerState>;
   private timerData = 0;
   private isTimerOn =  false;
+  private interval: Subscription;
 
   constructor(private store: Store<IAppState>) {
     this.timeFromStore = store.select('timer');
-    this.timeFromStore.subscribe((data: ITimerState) => {
-      this.time = data;
-    });
   }
 
 
   public onStart() {
     if (!this.isTimerOn) {
       this.isTimerOn = true;
-      this.interval  = window.setInterval(() => {
-        this.timerData++;
-        this.store.dispatch(new Set(this.processTime()));
-      }, 10);
+      this.interval = IntervalObservable.create(10).subscribe(() => {
+        this.store.dispatch(new Set(this.processTime(++this.timerData)));
+      });
     }
   }
 
   public onPause() {
-    clearInterval(this.interval);
     this.isTimerOn = false;
+    this.interval.unsubscribe();
   }
 
   public onStop() {
-    clearInterval(this.interval);
     this.isTimerOn = false;
+    this.timerData = 0;
+    this.interval.unsubscribe();
     this.store.dispatch(new Reset());
   }
 
-  private processTime(): ITimerState {
+  private processTime(time: number): ITimerState {
     let minutes: string;
     let seconds: string;
     let sec: number;
     let min: number;
-    this.timerData = this.timerData > Infinity - 100  ? 0 : this.timerData;
-    sec = this.timerData % 60;
+    time = time > Infinity - 100  ? 0 : time;
+    sec = time % 60;
     seconds = sec < 10 ? '0' + sec : '' + sec;
-    min = Math.floor((this.timerData - sec) / 60);
+    min = Math.floor((time - sec) / 60);
     min = min > 99 ? 0 : min;
     minutes = min < 10 ? '0' + min : '' + min;
     return { seconds, minutes};
