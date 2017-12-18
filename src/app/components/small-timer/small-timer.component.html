@@ -1,5 +1,5 @@
 <div class="small-timer">
-  <span>{{time.minutes}}</span>
+  <span>{{(timeFromStore | async).minutes }}</span>
   <span>:</span>
-  <span>{{time.seconds}}</span>
+  <span>{{(timeFromStore | async).seconds }}</span>
 </div>

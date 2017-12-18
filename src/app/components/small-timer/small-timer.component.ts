@@ -11,14 +11,9 @@ import { ITimerState } from '../../reducers/timer/timer.interface';
 })
 export class SmallTimerComponent  {
 
-  public time: ITimerState;
-
-  private timeFromStore: Observable<ITimerState>;
+  public timeFromStore: Observable<ITimerState>;
 
   constructor(private store: Store<IAppState>) {
     this.timeFromStore = store.select('timer');
-    this.timeFromStore.subscribe((data: ITimerState) => {
-      this.time = data;
-    });
   }
 }

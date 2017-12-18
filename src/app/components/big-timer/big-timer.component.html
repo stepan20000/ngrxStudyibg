@@ -2,11 +2,11 @@
   <div class="container">
     <div class="timer">
     <span>
-        {{time.minutes}}
+        {{ (timeFromStore | async).minutes }}
     </span>
       <span>:</span>
       <span>
-        {{time.seconds}}
+        {{ (timeFromStore | async).seconds }}
     </span>
     </div>
     <div class="controls">
