@@ -1,9 +1,10 @@
-import { Component, ViewChild, OnInit, ElementRef, AfterViewInit, NgModule } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 
 import 'rxjs/add/observable/of';
 import { Subscription } from 'rxjs/Subscription';
 
 import * as Rx from 'rxjs/Rx';
+
 
 
 @Component({
@@ -75,9 +76,53 @@ export class AppComponent implements OnInit, AfterViewInit {
     // const observable = Rx.Observable.from([1, 2, 3, 4, 5]);
     // const multicasted = observable.multicast(subject).ref;
 
-    const observable = Rx.Observable.of(3);
-    console.log(observable);
-    const subscription = observable.subscribe();
-    console.log(subscription);
+    // const observable = Rx.Observable.of(3);
+    // console.log(observable);
+    // const subscription = observable.subscribe();
+    // console.log(subscription);
+
+// ************************************************
+
+    // const observable1 = Rx.Observable.create(function subscribe(observer) {
+    //   observer.next(1);
+    //   observer.error('qqq error');
+    //   observer.next(2);
+    //   setTimeout(() => {
+    //     console.log('in timeout');
+    //     observer.next(5);
+    //     console.log('timeout after next');
+    //   }, 1000);
+    //   observer.next(4);
+    //   //observer.complete();
+    // });
+    //
+    // let subscription = observable1.subscribe({
+    //   next: (x) => console.log('next ', x),
+    //   error: (e) => console.log('error ', e),
+    //   complete: () => console.log('complete')
+    // });
+
+    // let subscription1 = observable1.subscribe({
+    //   next: (x) => console.log('next 1', x),
+    //   error: (e) => console.log('error 1', e),
+    //   complete: () => console.log('complete 1')
+    // });
+
+    // console.log('subscription === subscription1', subscription === subscription1);
+    //
+    // subscription1.unsubscribe();
+
+// *************************************************
+//     var subject = new Rx.Subject();
+//
+//     subject.subscribe({
+//       next: (v) => console.log('observerA: ' + v)
+//     });
+//     subject.subscribe({
+//       next: (v) => console.log('observerB: ' + v)
+//     });
+//
+//     subject.next(1);
+//     subject.next(2);
   }
 }

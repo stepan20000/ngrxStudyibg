@@ -4,12 +4,14 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
+import { TestMyObservableComponent } from './components/test-my-observable/test-my-observable.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    TestMyObservableComponent,
   ],
   imports: [
     BrowserModule,
