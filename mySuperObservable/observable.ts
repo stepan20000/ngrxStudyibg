@@ -8,7 +8,7 @@ export class Observable {
   constructor(foo: (x: Observer) => void) {
       this.baseFunction = foo,
       this.subscribe =  function (next, err?, complete?) {
-        const observer = constructObserver(Array.prototype.slice.call(arguments));
+        const observer = constructObserver(null, Array.prototype.slice.call(arguments));
         this.baseFunction(observer);
 
         return new Subscription(observer);
@@ -31,9 +31,17 @@ export class Observable {
     });
   }
 
+  public map(foo) {
+    this.subscribe = function(next, err?, complete?): Subscription {
+      const observer = constructObserver(foo, Array.prototype.slice.call(arguments));
+      this.baseFunction(observer);
+      return new Subscription(observer);
+    }
+    return this;
+  }
+
   public subscribe(next, err?, complete?): Subscription {
-    const observer = constructObserver(Array.prototype.slice.call(arguments));
-    console.log('observer in observable subscribe', observer);
+    const observer = constructObserver(null, Array.prototype.slice.call(arguments));
     this.baseFunction(observer);
 
     return new Subscription(observer);

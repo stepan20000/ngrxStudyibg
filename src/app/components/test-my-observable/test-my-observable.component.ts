@@ -114,23 +114,51 @@ export class TestMyObservableComponent implements OnInit {
  // **********************************************************************************
 
 // ******************************* Subscribe subject *********************************
-    const subject = new MySuperRx.Subject();
+//     const subject = new MySuperRx.Subject();
+//
+//     console.log(subject);
+//
+//     subject.subscribe({
+//       next: (v) => console.log('observerA: ' + v)
+//     });
+//     subject.subscribe({
+//       next: (v) => console.log('observerB: ' + v)
+//     });
+//
+//     console.log(subject);
+//
+//     const observable = MySuperRx.Observable.from([1, 2, 3]);
+//
+//     observable.subscribe(subject); // You can subscribe providing a Subject
 
-    console.log(subject);
+// ***********************************************************************************
 
-    subject.subscribe({
-      next: (v) => console.log('observerA: ' + v)
+// ************************************* map *****************************************
+    const observable = MySuperRx.Observable.create(function subscribe(observer) {
+      observer.next(1);
+      observer.next(2);
+      setTimeout(() => {
+        // console.log('in timeout');
+        // console.log('observer in timeout', observer.next.toString());
+        observer.next(4);
+      }, 1000);
+      observer.complete();
+      observer.next(3);
     });
-    subject.subscribe({
-      next: (v) => console.log('observerB: ' + v)
-    });
 
-    console.log(subject);
 
-    const observable = MySuperRx.Observable.from([1, 2, 3]);
+    console.log('observable', observable);
+    observable.map((x) => x * 2).subscribe({
+        next: (x) => console.log('next ', x),
+        error: (e) => console.log('error ', e),
+        complete: () => console.log('complete')
+      });
 
-    observable.subscribe(subject); // You can subscribe providing a Subject
-
+    // const subscription = observable.subscribe({
+    //   next: (x) => console.log('next ', x),
+    //   error: (e) => console.log('error ', e),
+    //   complete: () => console.log('complete')
+    // });
 
 
 // ***********************************************************************************
